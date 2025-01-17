@@ -109,6 +109,8 @@ def remove_project_files(target_dir):
         ".cookiecutter/setuptools/install_requires",
         ".cookiecutter/setuptools/console_scripts",
         ".cookiecutter/setuptools/entry_points",
+        {% if cookiecutter.get("linter") == "ruff" %}"tests/pyproject.toml",{% endif +%}
+        {% if cookiecutter._directory != 'pypackage' and cookiecutter.get("linter") == "ruff" %}"setup.cfg",{% endif +%}
     ]
 
     for path in paths_to_remove:
