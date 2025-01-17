@@ -59,6 +59,9 @@ def remove_conditional_files():
 
     {% if cookiecutter.get("linter") == "ruff" %}
     paths_to_remove.extend(["tests/pyproject.toml"])
+    {% if cookiecutter._directory in ['pyapp', 'pyramid-app'] or cookiecutter.get("linter") == "ruff" %}
+    paths_to_remove.extend(["setup.cfg"])
+    {% endif %}
     {% endif %}
 
     {% if cookiecutter.get("console_script") != "yes" %}
@@ -106,6 +109,10 @@ def remove_project_files(target_dir):
         ".cookiecutter/setuptools/install_requires",
         ".cookiecutter/setuptools/console_scripts",
         ".cookiecutter/setuptools/entry_points",
+        {% if cookiecutter.get("linter") == "ruff" %}"tests/pyproject.toml",{% endif +%}
+        {% if cookiecutter.get("linter") == "ruff" %}"setup.cfg",{% endif +%}
+        {% if cookiecutter.get("linter") == "ruff" %}".cookiecutter/includes/setup.cfg",{% endif +%}
+        {% if cookiecutter.get("linter") == "ruff" %}".cookiecutter/includes/pycodestyle",{% endif +%}
     ]
 
     for path in paths_to_remove:
